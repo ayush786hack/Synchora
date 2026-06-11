@@ -135,10 +135,6 @@ http://localhost:3000
 * Meeting Scheduling
 * Participant Analytics
 
-## Contributors
-
-* Ayush
-* Team Members
 
 ## License
 
