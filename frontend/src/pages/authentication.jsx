@@ -89,7 +89,7 @@ export default function Authentication() {
 
       <Link to="/" className="authBrand">
         <div className="brand-mark">🎥</div>
-        <span className="brand-name">XYZ Video Call</span>
+        <span className="brand-name">SYNCHORA Video Call</span>
       </Link>
 
       <div className="authLayout">
