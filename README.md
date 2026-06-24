@@ -1,141 +1,281 @@
-# Video Conferencing Platform
+# 🚀 Synchora
 
-A real-time video conferencing platform that enables users to create and join virtual meetings with high-quality audio, video, and screen sharing capabilities. The platform is designed to provide seamless communication and collaboration for teams, students, and professionals.
+Synchora is a real-time video conferencing platform built using React, Node.js, MongoDB, Socket.IO, and WebRTC. It allows users to create and join meetings, communicate through live audio/video streams, and maintain meeting history for future reference.
 
-## Features
+---
 
-* User Authentication (Login & Signup)
-* Create and Join Meeting Rooms
-* Real-time Video and Audio Communication
-* Screen Sharing
-* Chat Messaging During Meetings
-* Meeting Link Sharing
-* Mute/Unmute Audio
-* Turn Camera On/Off
-* Responsive User Interface
-* Secure Peer-to-Peer Communication
+## 🌟 Features
 
-## Tech Stack
+- User Authentication (Register/Login)
+- Real-Time Video Conferencing
+- WebRTC Peer-to-Peer Communication
+- Socket.IO Signaling Server
+- Create & Join Meeting Rooms
+- Meeting History Tracking
+- Secure JWT Authentication
+- Responsive User Interface
+- MongoDB Database Integration
+
+---
+
+## 🛠 Tech Stack
 
 ### Frontend
-
-* React.js
-* HTML5
-* CSS3
-* JavaScript
+- React.js
+- Vite
+- React Router DOM
+- Axios
+- Socket.IO Client
+- WebRTC
+- CSS/Tailwind CSS
 
 ### Backend
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT
+- bcryptjs
+- Socket.IO
 
-* Node.js
-* Express.js
+---
 
-### Real-Time Communication
-
-* WebRTC
-* Socket.IO
-
-### Database
-
-* MongoDB
-
-## Project Structure
+# 📂 Project Structure
 
 ```bash
-video-conferencing-platform/
+synchora
 │
-├── client/
-│   ├── src/
-│   ├── public/
-│   └── package.json
+├── frontend
+│   ├── public
+│   │
+│   └── src
+│       ├── components
+│       │
+│       ├── pages
+│       │   ├── Landing.jsx
+│       │   ├── Home.jsx
+│       │   ├── VideoMeet.jsx
+│       │   ├── History.jsx
+│       │
+│       ├── context
+│       │   └── AuthContext.jsx
+│       │
+│       ├── utils
+│       │
+│       ├── App.jsx
+│       ├── main.jsx
+│       └── index.css
 │
-├── server/
-│   ├── routes/
-│   ├── controllers/
-│   ├── models/
-│   ├── socket/
-│   └── server.js
+├── backend
+│   ├── controllers
+│   │   ├── authController.js
+│   │   ├── meetingController.js
+│   │   └── historyController.js
+│   │
+│   │
+│   ├── models
+│   │   ├── User.js
+│   │   ├── Meeting.js
+│   │   └── MeetingHistory.js
+│   │
+│   ├── routes
+│   │
+│   │
+│   ├── app.js
+│   └── .env
 │
-├── README.md
-└── package.json
+└── README.md
 ```
 
-## Installation
+---
 
-### Clone the Repository
+# ⚙️ Installation
+
+## 1. Clone Repository
 
 ```bash
-git clone https://github.com/your-username/video-conferencing-platform.git
-cd video-conferencing-platform
+git clone https://github.com/your-username/synchora.git
+cd synchora
 ```
 
-### Install Dependencies
+---
 
-Frontend:
+## 2. Frontend Setup
 
 ```bash
-cd client
+cd frontend
+
 npm install
+
+npm run dev
 ```
 
-Backend:
+Frontend runs on:
 
 ```bash
-cd ../server
-npm install
+http://localhost:5173
 ```
 
-## Environment Variables
+---
 
-Create a `.env` file in the server directory and add:
+## 3. Backend Setup
+
+```bash
+cd backend
+
+npm install
+
+npm run dev
+```
+
+Backend runs on:
+
+```bash
+http://localhost:8000
+```
+
+---
+
+# 🔑 Environment Variables
+
+Create a `.env` file inside the backend folder:
 
 ```env
-PORT=5000
+PORT=8000
+
 MONGO_URI=your_mongodb_connection_string
+
 JWT_SECRET=your_secret_key
 ```
 
-## Running the Application
+---
 
-Start Backend:
+# 🗄 Database Models
 
-```bash
-npm start
+## User Model
+
+```js
+{
+  username: String,
+  password: String,
+  createdAt: Date
+}
 ```
 
-Start Frontend:
+## Meeting Model
 
-```bash
-cd client
-npm start
+```js
+{
+  roomCode: String,
+  host: ObjectId,
+  createdAt: Date
+}
 ```
 
-The application will be available at:
+## Meeting History Model
+
+```js
+{
+  userId: ObjectId,
+  meetingCode: String,
+  joinedAt: Date
+}
+```
+
+---
+
+# 🔌 API Endpoints
+
+## Authentication
+
+### Register
+
+```http
+POST /api/auth/register
+```
+
+### Login
+
+```http
+POST /api/auth/login
+```
+
+---
+
+## Meetings
+
+### Create Meeting
+
+```http
+POST /api/meeting/create
+```
+
+### Join Meeting
+
+```http
+GET /api/meeting/:roomCode
+```
+
+---
+
+## History
+
+### Save Meeting History
+
+```http
+POST /api/history/add
+```
+
+### Get User History
+
+```http
+GET /api/history/user
+```
+
+---
+
+# 🎥 WebRTC Workflow
 
 ```text
-http://localhost:3000
+User A
+   │
+   ▼
+Socket.IO Server
+   ▲
+   │
+User B
+
+1. User joins room
+2. Offer created
+3. Offer sent through Socket.IO
+4. Answer received
+5. ICE candidates exchanged
+6. Peer connection established
+7. Audio & Video streams shared
 ```
 
-## How It Works
+---
 
-1. Users register and log in.
-2. A user creates a meeting room.
-3. A unique room ID is generated.
-4. Participants join using the room ID or invitation link.
-5. WebRTC establishes peer-to-peer media connections.
-6. Socket.IO handles signaling and real-time communication.
-7. Users can communicate through video, audio, chat, and screen sharing.
+# 🚀 Future Enhancements
 
-## Future Enhancements
+- Screen Sharing
+- Group Video Calls
+- Chat Messaging
+- History
+- End-to-End Encryption
 
-* Meeting Recording
-* Virtual Backgrounds
-* AI-Based Noise Cancellation
-* Breakout Rooms
-* Live Transcription
-* Meeting Scheduling
-* Participant Analytics
+---
+
+# 👨‍💻 Author
+
+Ayush Tiwari
+
+B.Tech CSE Student
+
+---
 
 
-## License
 
-This project is licensed under the MIT License.
+---
+
+## ⭐ If you like this project, give it a star on GitHub!
