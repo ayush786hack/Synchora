@@ -88,28 +88,47 @@ const getUserHistory = async (req, res) => {
   }
 };
 const addToHistory = async (req, res) => {
-  const { token, meetingCode } = req.body;
   try {
-    const user = await User.findOne({ token: token });
+    console.log("BODY:", req.body);
+
+    const { token, meetingCode } = req.body;
+
+    console.log("TOKEN:", token);
+    console.log("MEETING:", meetingCode);
+
+    const user = await User.findOne({ token });
+
+    console.log("USER:", user);
+
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({
+        message: "User not found",
+      });
     }
+
+    if (!user.history) {
+      user.history = [];
+    }
+
     const newMeeting = new Meeting({
       user_id: user.username,
-      meetingCode: meetingCode,
+      meetingCode,
     });
+
     await newMeeting.save();
-    user.history.push(newMeeting._id); 
+
+    user.history.push(newMeeting._id);
+
     await user.save();
 
-    return res
-      .status(httpStatus.CREATED)
-      .json({ message: "Meeting added to history successfully" });
-  } catch (error) {
-    console.error(error);
-    return res
-      .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json({ message: "Error adding meeting to history" });
+    return res.status(201).json({
+      message: "Meeting added",
+    });
+  } catch (err) {
+    console.error("ERROR:", err);
+    return res.status(500).json({
+      error: err.message,
+    });
   }
 };
 

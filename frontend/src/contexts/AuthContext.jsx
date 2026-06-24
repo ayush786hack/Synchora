@@ -15,7 +15,7 @@ const client =axios.create({
 
 export const AuthProvider =({children})=>{
     const authContext =useContext(AuthContext);//this is wrong
-    const [userData ,setUserData]=useState(AuthContext);//it should be null
+    const [userData ,setUserData]=useState(null);//it should be null
        const router =useNavigate();
     const handleRegister=async(name,username,password)=>{
         try{

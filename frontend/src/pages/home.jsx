@@ -9,11 +9,17 @@ function Home() {
   const navigate = useNavigate();
   const [meetingCode, setMeetingCode] = useState("");
  const {addToUserHistory} =useContext(AuthContext);
-  const handleJoinVideoCall = async() => {
+const handleJoinVideoCall = async () => {
+  try {
     await addToUserHistory(meetingCode);
-    if (!meetingCode.trim()) return;
-    navigate(`/${meetingCode.trim()}`);
-  };
+  } catch (err) {
+    console.error(err);
+  }
+
+  if (!meetingCode.trim()) return;
+
+  navigate(`/${meetingCode.trim()}`);
+};
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") handleJoinVideoCall();
